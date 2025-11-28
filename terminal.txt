@@ -1,0 +1,31 @@
+composer create-project laravel/laravel expenseflow
+cd expenseflow
+
+composer require laravel/breeze --dev
+php artisan breeze:install livewire
+npm install
+
+touch database/database.sqlite
+
+php artisan migrate
+
+php artisan make:migration add_theme_to_users_table --table=users
+php artisan make:migration create_categories_table
+php artisan make:migration create_expenses_table
+php artisan make:migration create_budgets_table
+
+php artisan migrate
+
+php artisan make:model Category
+php artisan make:model Expense
+php artisan make:model Budget
+
+php artisan make:seeder CategorySeeder
+
+php artisan db:seed
+
+php artisan make:livewire Dashboard
+php artisan make:livewire Expenses/Index
+
+
+php artisan livewire:publish --config
