@@ -2,19 +2,19 @@
     <div class="flex items-center justify-between">
         <div class="flex flex-col gap-2">
             <h2 class="font-bold text-2xl text-gray-800">
-                Expenses
+                Budgets
             </h2>
-            <p class="text-sm font-semibold text-gray-400">Manage and track all your expenses</p>
+            <p class="text-sm font-semibold text-gray-400">Track your spending against monthly budgets</p>
         </div>
 
         <x-primary-button>
             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-            Add Expense
+            Add Budget
         </x-primary-button>
 
     </div>
 </x-slot>
 
 <div>
-
+    {{-- The whole world belongs to you. --}}
 </div>
