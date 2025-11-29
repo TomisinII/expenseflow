@@ -2,17 +2,18 @@
 
 use App\Livewire\Dashboard;
 use App\Livewire\Expenses;
+use App\Livewire\Landing;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', Landing::class)
+    ->name('home');
 
-Route::get('dashboard', Dashboard::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::get('expenses', Expenses\Index::class)
-    ->middleware(['auth', 'verified'])
-    ->name('expenses.index');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', Dashboard::class)
+        ->name('dashboard');
+    Route::get('expenses', Expenses\Index::class)
+        ->name('expenses.index');
+});
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

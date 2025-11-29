@@ -26,6 +26,8 @@ php artisan db:seed
 
 php artisan make:livewire Dashboard
 php artisan make:livewire Expenses/Index
+php artisan make:livewire Landing
+php artisan make:livewire Components/Header
 
 
 php artisan livewire:publish --config
