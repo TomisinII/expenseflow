@@ -7,7 +7,7 @@
                     <h2 class="text-2xl font-bold text-gray-900">Edit Expense</h2>
                 </div>
                 <button type="button"
-                        x-on:click="$dispatch('close-modal', 'add-expense')"
+                        x-on:click="$dispatch('close-modal', 'edit-expense')"
                         class="text-gray-400 hover:text-gray-600 transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
