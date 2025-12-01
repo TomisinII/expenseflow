@@ -4,13 +4,59 @@ namespace App\Livewire;
 
 use App\Models\Expense;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
+
 
 class Dashboard extends Component
 {
+    /**
+     * Calculate the change between current and previous values
+     * Returns: 'increase', 'decrease', or 'no-change'
+     */
+    private function calculateChange($current, $previous)
+    {
+        if ($current > $previous) {
+            return 'increase';
+        } elseif ($current < $previous) {
+            return 'decrease';
+        } else {
+            return 'no-change';
+        }
+    }
+
+    #[On('expense-created')]
+    #[On('expense-updated')]
+    #[On('expense-deleted')]
+    public function refreshData()
+    {
+        // Dispatch event to update charts
+        $this->dispatch('refresh-charts');
+    }
+
+    public function deleteExpense($expenseId)
+    {
+        $user = Auth::user();
+        $expense = Expense::where('id', $expenseId)->where('user_id', $user->id)->first();
+
+        if ($expense) {
+            $expense->delete();
+            $this->dispatch('message', 'Expense deleted successfully.');
+            $this->dispatch('expense-deleted');
+        } else {
+            $this->dispatch('error', ['message' => 'Expense not found ors unauthorized.']);
+        }
+    }
+
+    public function editExpense($expenseId)
+    {
+        $this->dispatch('edit-expense', ['expenseId' => $expenseId]);
+    }
+
     public function render()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Calculate totals
         $today = Expense::where('user_id', $user->id)
@@ -47,6 +93,41 @@ class Dashboard extends Component
         $thisYearTransactions = Expense::where('user_id', $user->id)
             ->whereYear('expense_date', Carbon::now()->year)
             ->count();
+
+        // ====== COMPARISON DATA ======
+
+        // Compare with yesterday
+        $yesterdayTransactions = Expense::where('user_id', $user->id)
+            ->whereDate('expense_date', Carbon::yesterday())
+            ->count();
+
+        $todayChange = $this->calculateChange($todayTransactions, $yesterdayTransactions);
+
+        // Compare with last week
+        $lastWeekStart = Carbon::now()->subWeek()->startOfWeek();
+        $lastWeekEnd = Carbon::now()->subWeek()->endOfWeek();
+        $lastWeekTransactions = Expense::where('user_id', $user->id)
+            ->whereBetween('expense_date', [$lastWeekStart, $lastWeekEnd])
+            ->count();
+
+        $thisWeekChange = $this->calculateChange($thisWeekTransactions, $lastWeekTransactions);
+
+        // Compare with last month
+        $lastMonth = Carbon::now()->subMonth();
+        $lastMonthTransactions = Expense::where('user_id', $user->id)
+            ->whereMonth('expense_date', $lastMonth->month)
+            ->whereYear('expense_date', $lastMonth->year)
+            ->count();
+
+        $thisMonthChange = $this->calculateChange($thisMonthTransactions, $lastMonthTransactions);
+
+        // Compare with last year
+        $lastYear = Carbon::now()->subYear();
+        $lastYearTransactions = Expense::where('user_id', $user->id)
+            ->whereYear('expense_date', $lastYear->year)
+            ->count();
+
+        $thisYearChange = $this->calculateChange($thisYearTransactions, $lastYearTransactions);
 
         // Get recent expenses
         $recentExpenses = Expense::with('category')
@@ -94,6 +175,11 @@ class Dashboard extends Component
             'thisWeekTransactions' => $thisWeekTransactions,
             'thisMonthTransactions' => $thisMonthTransactions,
             'thisYearTransactions' => $thisYearTransactions,
+            // Change data
+            'todayChange' => $todayChange,
+            'thisWeekChange' => $thisWeekChange,
+            'thisMonthChange' => $thisMonthChange,
+            'thisYearChange' => $thisYearChange,
             'recentExpenses' => $recentExpenses,
             // Chart data
             'categoryLabels' => $categoryLabels,
