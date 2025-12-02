@@ -30,8 +30,8 @@ php artisan make:livewire Expenses/Create
 php artisan make:livewire Expenses/Edit
 php artisan make:livewire Categories/Index
 php artisan make:livewire Categories/Create
-php artisan make:livewire Categories/Edit
 php artisan make:livewire Budgets/Index
+php artisan make:livewire Budgets/Create
 php artisan make:livewire Analytics
 php artisan make:livewire Landing
 php artisan make:livewire Components/Header
