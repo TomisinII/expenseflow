@@ -22,7 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
-        'theme'
+        'theme',
+        'budget_notifications',
+        'weekly_reports',
     ];
 
     /**
@@ -40,13 +42,13 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'budget_notifications' => 'boolean',
+        'weekly_reports' => 'boolean',
+    ];
+
     public function categories()
     {
         return $this->hasMany(Category::class);

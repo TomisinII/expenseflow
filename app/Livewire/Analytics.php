@@ -47,6 +47,17 @@ class Analytics extends Component
             $this->showDatePicker = false;
             $this->setDefaultDates();
         }
+        $this->dispatch('refresh-charts');
+    }
+
+    public function updatedStartDate()
+    {
+        $this->dispatch('refresh-charts');
+    }
+
+    public function updatedEndDate()
+    {
+        $this->dispatch('refresh-charts');
     }
 
     public function applyCustomRange()
@@ -86,15 +97,20 @@ class Analytics extends Component
         $categoryBreakdown = Expense::select(
             'categories.name',
             'categories.color',
-            DB::raw('SUM(expenses.amount) as total'),
-            DB::raw('ROUND((SUM(expenses.amount) / ' . ($totalSpent ?: 1) . ' * 100), 1) as percentage')
+            DB::raw('SUM(expenses.amount) as total')
         )
             ->join('categories', 'expenses.category_id', '=', 'categories.id')
             ->where('expenses.user_id', $userId)
             ->whereBetween('expenses.expense_date', [$this->startDate, $this->endDate])
             ->groupBy('categories.id', 'categories.name', 'categories.color')
             ->orderByDesc('total')
-            ->get();
+            ->get()
+            ->map(function ($item) use ($totalSpent) {
+                $item->percentage = $totalSpent > 0
+                    ? round(($item->total / $totalSpent) * 100, 1)
+                    : 0;
+                return $item;
+            });
 
         // Daily spending trend
         $dailyTrend = Expense::select(
@@ -134,8 +150,42 @@ class Analytics extends Component
     {
         $analytics = $this->getAnalyticsData();
 
+        if (!$analytics) {
+            return view('livewire.analytics', [
+                'analytics' => null,
+                'categoryLabels' => [],
+                'categoryAmounts' => [],
+                'categoryColors' => [],
+                'categoryPercentages' => [],
+                'trendLabels' => [],
+                'trendData' => [],
+                'topExpenseLabels' => [],
+                'topExpenseData' => [],
+            ]);
+        }
+
+        // Prepare chart data
+        $categoryLabels = $analytics['categoryBreakdown']->pluck('name')->toArray();
+        $categoryAmounts = $analytics['categoryBreakdown']->pluck('total')->toArray();
+        $categoryColors = $analytics['categoryBreakdown']->pluck('color')->toArray();
+        $categoryPercentages = $analytics['categoryBreakdown']->pluck('percentage')->toArray();
+
+        $trendLabels = $analytics['dailyTrend']->map(fn($d) => Carbon::parse($d->date)->format('M j'))->toArray();
+        $trendData = $analytics['dailyTrend']->pluck('total')->toArray();
+
+        $topExpenseLabels = $analytics['topExpenses']->pluck('description')->toArray();
+        $topExpenseData = $analytics['topExpenses']->pluck('amount')->toArray();
+
         return view('livewire.analytics', [
-            'analytics' => $analytics
+            'analytics' => $analytics,
+            'categoryLabels' => $categoryLabels,
+            'categoryAmounts' => $categoryAmounts,
+            'categoryColors' => $categoryColors,
+            'categoryPercentages' => $categoryPercentages,
+            'trendLabels' => $trendLabels,
+            'trendData' => $trendData,
+            'topExpenseLabels' => $topExpenseLabels,
+            'topExpenseData' => $topExpenseData,
         ]);
     }
 }

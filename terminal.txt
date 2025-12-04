@@ -13,12 +13,14 @@ php artisan make:migration add_theme_to_users_table --table=users
 php artisan make:migration create_categories_table
 php artisan make:migration create_expenses_table
 php artisan make:migration create_budgets_table
+php artisan make:migration create_notifications_table
 
 php artisan migrate
 
 php artisan make:model Category
 php artisan make:model Expense
 php artisan make:model Budget
+php artisan make:model Notification
 
 php artisan make:seeder CategorySeeder
 
@@ -35,8 +37,14 @@ php artisan make:livewire Budgets/Create
 php artisan make:livewire Analytics
 php artisan make:livewire Landing
 php artisan make:livewire Components/Header
+php artisan make:livewire Notification/Index
 
 
 php artisan livewire:publish --config
 
 npm install chart.js
+
+php artisan make:volt /profile/update-preferences-form
+
+php artisan make:migration add_preferences_to_users_tablet
+php artisan make:livewire ThemeToggle
