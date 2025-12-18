@@ -34,11 +34,6 @@
                 {{-- Right Content - Dashboard Mockup --}}
                 <div class="relative">
                     <div class="bg-white rounded-lg shadow-2xl p-4 transform rotate-2 hover:rotate-0 transition duration-300">
-                        <div class="bg-gray-100 rounded-t-lg p-3 flex items-center space-x-2">
-                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                        </div>
                         <img src="{{ asset('images/dashboard.png') }}"
                              alt="Dashboard Preview"
                              class="w-full rounded-b-lg">

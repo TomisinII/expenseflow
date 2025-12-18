@@ -44,53 +44,50 @@ new class extends Component
 
         <!-- Current Password -->
         <div>
-            <label for="update_password_current_password" class="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                Current Password
-            </label>
-            <input
+            <x-input-label for="update_password_current_password" :value="('Current Password')" />
+            <x-text-input
                 wire:model="current_password"
                 id="update_password_current_password"
                 type="password"
                 autocomplete="current-password"
-                class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                class="w-full mt-2"
+            />
             <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
         </div>
 
         <!-- New Password -->
         <div>
-            <label for="update_password_password" class="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                New Password
-            </label>
-            <input
+            <x-input-label for="update_password_password" :value="('New Password')" />
+            <x-text-input
                 wire:model="password"
                 id="update_password_password"
                 type="password"
                 autocomplete="new-password"
-                class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                class="w-full mt-2"
+            />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div>
-            <label for="update_password_password_confirmation" class="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                Confirm Password
-            </label>
-            <input
+            <x-input-label for="update_password_password_confirmation" :value="('Confirm Password')" />
+            <x-text-input
                 wire:model="password_confirmation"
                 id="update_password_password_confirmation"
                 type="password"
                 autocomplete="new-password"
-                class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                class="w-full mt-2"
+            />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <!-- Save Button -->
         <div class="flex items-center gap-4">
-            <button
+            <x-primary-button
                 type="submit"
                 class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
                 Update Password
-            </button>
+            </x-primary-button>
 
             <div
                 x-data="{ show: false }"

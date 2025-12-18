@@ -26,6 +26,6 @@
      x-transition:leave="transition ease-in duration-300"
      x-transition:leave-start="opacity-100 transform translate-x-0"
      x-transition:leave-end="opacity-0 transform translate-x-full"
-    {{ $attributes->merge(['class' => 'fixed top-4 right-4 z-50 text-sm text-gray-600']) }}>
+    {{ $attributes->merge(['class' => 'fixed top-4 right-4 z-50 text-sm text-gray-600 dark:text-gray-300']) }}>
     {{ $slot }}
 </div>

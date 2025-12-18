@@ -7,7 +7,6 @@ new class extends Component
 {
     public bool $darkMode = false;
     public bool $budgetNotifications = true;
-    public bool $weeklyReports = true;
 
     public function mount(): void
     {
@@ -23,9 +22,6 @@ new class extends Component
         $user->theme = $this->darkMode ? 'dark' : 'light';
         $user->save();
 
-        // Dispatch event to update theme globally
-        $this->dispatch('theme-changed', theme: $user->theme);
-
         // Reload page to apply theme change
         $this->js('window.location.reload()');
     }
@@ -34,15 +30,6 @@ new class extends Component
     {
         $user = Auth::user();
         $user->budget_notifications = $this->budgetNotifications;
-        $user->save();
-
-        $this->dispatch('preference-updated');
-    }
-
-    public function updatedWeeklyReports(): void
-    {
-        $user = Auth::user();
-        $user->weekly_reports = $this->weeklyReports;
         $user->save();
 
         $this->dispatch('preference-updated');
@@ -80,22 +67,6 @@ new class extends Component
                 wire:click="$toggle('budgetNotifications')"
                 class="relative inline-flex h-6 w-11 items-center rounded-full transition {{ $budgetNotifications ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600' }}">
                 <span class="inline-block h-4 w-4 transform rounded-full bg-white transition {{ $budgetNotifications ? 'translate-x-6' : 'translate-x-1' }}"></span>
-            </button>
-        </div>
-
-        <!-- Weekly Reports Toggle -->
-        <div class="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
-            <div>
-                <h4 class="text-base font-semibold text-gray-900 dark:text-gray-100">Weekly Reports</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                    Receive weekly spending summary via email
-                </p>
-            </div>
-            <button
-                type="button"
-                wire:click="$toggle('weeklyReports')"
-                class="relative inline-flex h-6 w-11 items-center rounded-full transition {{ $weeklyReports ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600' }}">
-                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition {{ $weeklyReports ? 'translate-x-6' : 'translate-x-1' }}"></span>
             </button>
         </div>
 

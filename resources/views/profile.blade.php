@@ -57,11 +57,9 @@
                                 Download all your expense data as CSV
                             </p>
                         </div>
-                        <button
-                            type="button"
-                            class="px-6 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition">
+                        <x-secondary-button>
                             Export
-                        </button>
+                        </x-secondary-button>
                     </div>
                 </div>
 

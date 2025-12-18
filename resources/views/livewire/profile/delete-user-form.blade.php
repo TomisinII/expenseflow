@@ -32,13 +32,12 @@ new class extends Component
             </p>
         </div>
 
-        <button
+        <x-danger-button
             type="button"
             x-data=""
-            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-            class="px-6 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition">
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">
             Delete
-        </button>
+        </x-danger-button>
     </div>
 
     <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
@@ -52,31 +51,27 @@ new class extends Component
             </p>
 
             <div class="mt-6">
-                <label for="password" class="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    Password
-                </label>
-                <input
+                <x-input-label for="password" :value="('Password')" />
+                <x-text-input
                     wire:model="password"
                     id="password"
                     type="password"
                     placeholder="Enter your password"
-                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 focus:border-red-500 focus:ring-red-500">
+                />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
             <div class="mt-6 flex justify-end gap-3">
-                <button
+                <x-secondary-button
                     type="button"
-                    x-on:click="$dispatch('close')"
-                    class="px-6 py-2.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition">
+                    x-on:click="$dispatch('close')">
                     Cancel
-                </button>
+                </x-secondary-button>
 
-                <button
-                    type="submit"
-                    class="px-6 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition">
+                <x-danger-button
+                    type="submit">
                     Delete Account
-                </button>
+                </x-danger-button>
             </div>
         </form>
     </x-modal>

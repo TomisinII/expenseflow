@@ -29,7 +29,7 @@
         x-transition:leave="ease-in duration-200"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed inset-0 bg-gray-900 bg-opacity-50"
+        class="fixed inset-0 bg-gray-900 dark:bg-black bg-opacity-50 dark:bg-opacity-70"
     ></div>
 
     <!-- Side Modal -->
@@ -44,7 +44,7 @@
             x-transition:leave-end="translate-x-full"
             class="w-screen max-w-xl"
         >
-            <div class="h-full bg-white shadow-xl flex flex-col">
+            <div class="h-full bg-white dark:bg-gray-900 shadow-xl flex flex-col">
                 <!-- Modal Content -->
                 <div class="flex-1 overflow-y-auto">
                     {{ $slot }}

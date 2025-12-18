@@ -4,12 +4,12 @@
             {{-- Modal Header --}}
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900">Add Expense</h2>
-                    <p class="text-sm text-gray-500 mt-1">Add a new expense to track your spending</p>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Add Expense</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Add a new expense to track your spending</p>
                 </div>
                 <button type="button"
                         x-on:click="$dispatch('close-modal', 'add-expense')"
-                        class="text-gray-400 hover:text-gray-600 transition">
+                        class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -38,7 +38,7 @@
 
                     <select wire:model="category_id"
                             id="category_id"
-                            class="w-full mt-1 border-gray-300 focus:border-purple-600 focus:ring-purple-600 rounded-md shadow-sm"
+                            class="w-full mt-1 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm"
                             required>
                         <option value="">Select category</option>
                         @foreach($categories as $category)
@@ -86,7 +86,7 @@
 
                     <select wire:model="payment_method"
                             id="payment_method"
-                            class="w-full mt-1 border-gray-300 focus:border-purple-600 focus:ring-purple-600 rounded-md shadow-sm"
+                            class="w-full mt-1 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm"
                             required>
                         <option value="">Select payment method</option>
                         <option value="cash">Cash</option>
@@ -106,7 +106,7 @@
                         id="notes"
                         rows="3"
                         placeholder="Add any additional notes..."
-                        class="w-full mt-1 border-gray-300 focus:border-purple-600 focus:ring-purple-600 rounded-md shadow-sm resize-none"></textarea>
+                        class="w-full mt-1 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm resize-none"></textarea>
 
                     <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                 </div>

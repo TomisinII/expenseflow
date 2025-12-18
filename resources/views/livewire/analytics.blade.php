@@ -5,7 +5,7 @@
                 <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-200">
                     Analytics
                 </h2>
-                <p class="text-sm font-semibold text-gray-400">Visualize and understand your spending patterns</p>
+                <p class="text-sm font-semibold text-gray-400 dark:text-gray-500">Visualize and understand your spending patterns</p>
             </div>
 
             <x-secondary-button wire:click="exportReport">
@@ -19,7 +19,7 @@
 
     <div class="space-y-6">
         <!-- Period Filter Tabs -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
             <div class="p-6">
                 <div class="flex flex-wrap gap-2">
                     <button
@@ -48,7 +48,7 @@
 
         @if($showDatePicker || $period === 'custom')
         <!-- Custom Date Range Picker -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Select Date Range</h3>
                 <div class="flex flex-wrap gap-4 items-end">
@@ -81,11 +81,11 @@
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Total Spent -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Spent</h3>
-                        <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                        <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
                             <path d="M444-192v-72h72v72h-72Zm0-132v-444h72v444h-72Z"/>
                         </svg>
                     </div>
@@ -97,11 +97,11 @@
             </div>
 
             <!-- Daily Average -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Daily Average</h3>
-                        <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                        <svg class="w-5 h-5 text-green-500 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
                             <path d="m216-160-56-56 464-464H504v-80h280v280h-80v-120L216-160Z"/>
                         </svg>
                     </div>
@@ -111,11 +111,11 @@
             </div>
 
             <!-- Top Category -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-2">
                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Top Category</h3>
-                        <svg class="w-5 h-5 text-amber-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                        <svg class="w-5 h-5 text-amber-500 dark:text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
                             <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
                         </svg>
                     </div>
@@ -132,7 +132,7 @@
         <!-- Charts Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Spending by Category (Pie Chart) -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Spending by Category</h3>
                     @if(count($categoryLabels) > 0)
@@ -146,6 +146,7 @@
                                     if (this.chart) {
                                         this.chart.destroy();
                                     }
+                                    const isDark = document.documentElement.classList.contains('dark');
                                     this.chart = new Chart(this.$el, {
                                         type: 'pie',
                                         data: {
@@ -154,7 +155,7 @@
                                                 data: @js($categoryAmounts),
                                                 backgroundColor: @js($categoryColors),
                                                 borderWidth: 2,
-                                                borderColor: '#fff'
+                                                borderColor: isDark ? '#1f2937' : '#fff'
                                             }]
                                         },
                                         options: {
@@ -168,6 +169,7 @@
                                                         font: {
                                                             size: 12
                                                         },
+                                                        color: isDark ? '#d1d5db' : '#374151',
                                                         generateLabels: function(chart) {
                                                             const data = chart.data;
                                                             const percentages = @js($categoryPercentages);
@@ -192,11 +194,12 @@
                                     });
                                 }
                             }"
-                            x-init="initChart()">
+                            x-init="initChart()"
+                            @refresh-charts.window="setTimeout(() => initChart(), 100)">
                         </canvas>
                     </div>
                     @else
-                    <div class="flex items-center justify-center h-80 text-gray-400">
+                    <div class="flex items-center justify-center h-80 text-gray-400 dark:text-gray-500">
                         No expenses in this period
                     </div>
                     @endif
@@ -204,7 +207,7 @@
             </div>
 
             <!-- Daily Spending Trend -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Daily Spending Trend</h3>
                     @if(count($trendLabels) > 0 && array_sum($trendData) > 0)
@@ -218,6 +221,7 @@
                                     if (this.chart) {
                                         this.chart.destroy();
                                     }
+                                    const isDark = document.documentElement.classList.contains('dark');
                                     this.chart = new Chart(this.$el, {
                                         type: 'line',
                                         data: {
@@ -232,7 +236,7 @@
                                                 fill: true,
                                                 pointRadius: 4,
                                                 pointBackgroundColor: '#6366f1',
-                                                pointBorderColor: '#fff',
+                                                pointBorderColor: isDark ? '#1f2937' : '#fff',
                                                 pointBorderWidth: 2,
                                                 pointHoverRadius: 6
                                             }]
@@ -256,9 +260,21 @@
                                                 y: {
                                                     beginAtZero: true,
                                                     ticks: {
+                                                        color: isDark ? '#d1d5db' : '#6b7280',
                                                         callback: function(value) {
                                                             return '₦' + value.toLocaleString();
                                                         }
+                                                    },
+                                                    grid: {
+                                                        color: isDark ? '#374151' : '#e5e7eb'
+                                                    }
+                                                },
+                                                x: {
+                                                    ticks: {
+                                                        color: isDark ? '#d1d5db' : '#6b7280'
+                                                    },
+                                                    grid: {
+                                                        color: isDark ? '#374151' : '#e5e7eb'
                                                     }
                                                 }
                                             }
@@ -266,11 +282,12 @@
                                     });
                                 }
                             }"
-                            x-init="initChart()">
+                            x-init="initChart()"
+                            @refresh-charts.window="setTimeout(() => initChart(), 100)">
                         </canvas>
                     </div>
                     @else
-                    <div class="flex items-center justify-center h-80 text-gray-400">
+                    <div class="flex items-center justify-center h-80 text-gray-400 dark:text-gray-500">
                         No expenses in this period
                     </div>
                     @endif
@@ -279,7 +296,7 @@
         </div>
 
         <!-- Top 10 Expenses -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
             <div class="p-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Top 10 Expenses</h3>
                 @if(count($topExpenseLabels) > 0)
@@ -293,6 +310,7 @@
                                 if (this.chart) {
                                     this.chart.destroy();
                                 }
+                                const isDark = document.documentElement.classList.contains('dark');
                                 this.chart = new Chart(this.$el, {
                                     type: 'bar',
                                     data: {
@@ -323,9 +341,21 @@
                                             x: {
                                                 beginAtZero: true,
                                                 ticks: {
+                                                    color: isDark ? '#d1d5db' : '#6b7280',
                                                     callback: function(value) {
                                                         return '₦' + value.toLocaleString();
                                                     }
+                                                },
+                                                grid: {
+                                                    color: isDark ? '#374151' : '#e5e7eb'
+                                                }
+                                            },
+                                            y: {
+                                                ticks: {
+                                                    color: isDark ? '#d1d5db' : '#6b7280'
+                                                },
+                                                grid: {
+                                                    color: isDark ? '#374151' : '#e5e7eb'
                                                 }
                                             }
                                         }
@@ -333,11 +363,12 @@
                                 });
                             }
                         }"
-                        x-init="initChart()">
+                        x-init="initChart()"
+                        @refresh-charts.window="setTimeout(() => initChart(), 100)">
                     </canvas>
                 </div>
                 @else
-                <div class="flex items-center justify-center h-32 text-gray-400">
+                <div class="flex items-center justify-center h-32 text-gray-400 dark:text-gray-500">
                     No expenses in this period
                 </div>
                 @endif
@@ -346,9 +377,9 @@
 
         @else
         <!-- Empty State -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
             <div class="p-12 text-center">
-                <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
                     <path d="M216-96q-29.7 0-50.85-21.15Q144-138.3 144-168v-528q0-29.7 21.15-50.85Q186.3-768 216-768h72v-96h72v96h240v-96h72v96h72q29.7 0 50.85 21.15Q816-725.7 816-696v528q0 29.7-21.15 50.85Q773.7-96 744-96H216Zm0-72h528v-360H216v360Z"/>
                 </svg>
                 <h3 class="mt-2 text-sm font-semibold text-gray-900 dark:text-gray-100">Select a date range to view analytics</h3>

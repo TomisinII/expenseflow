@@ -1,59 +1,265 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 💰 ExpenseFlow
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> A modern, intuitive expense tracking application built with Laravel 11 and Livewire 3
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat-square&logo=laravel)
+![Livewire](https://img.shields.io/badge/Livewire-3.x-FB70A9?style=flat-square)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=flat-square&logo=tailwind-css)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ExpenseFlow is a personal finance management application that helps individuals gain control over their finances through smart categorization, visual analytics, real-time notifications, and a seamless user experience. Built with modern Laravel and Livewire, it provides a reactive, SPA-like experience without the complexity of a JavaScript framework.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### ✨ Key Features
 
-## Learning Laravel
+- **💳 Expense Management** - Quick expense entry with comprehensive tracking
+- **📊 Visual Analytics** - Beautiful charts showing spending patterns and trends
+- **🎯 Budget Tracking** - Set monthly budgets with smart alerts at 90% and 100% thresholds
+- **🏷️ Custom Categories** - Organize expenses with personalized categories, icons, and colors
+- **🔔 Real-time Notifications** - Instant feedback for actions and budget alerts
+- **🌙 Dark Mode** - Full dark mode support throughout the application
+- **📱 Responsive Design** - Works seamlessly on mobile, tablet, and desktop
+- **📤 CSV Export** - Export your expense data for external analysis
+- **🔍 Advanced Filtering** - Filter by category, date range, payment method, and amount
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🎯 Target Audience
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Young professionals (25-35)
+- Students
+- Freelancers
+- Anyone wanting to track personal expenses with smart alerts
 
-## Laravel Sponsors
+## 🚀 Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Backend
+- **Framework:** Laravel 11.x
+- **Database:** MySQL 8.0+
+- **Authentication:** Laravel Breeze (Livewire stack)
+- **Storage:** Local (development) / S3 (production ready)
 
-### Premium Partners
+### Frontend
+- **UI Framework:** Livewire 3.x
+- **Styling:** Tailwind CSS 3.x
+- **JavaScript:** Alpine.js (bundled with Livewire)
+- **Icons:** Material Design Icons
+- **Charts:** Chart.js
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 📦 Installation
 
-## Contributing
+### Prerequisites
+- PHP 8.2+
+- Composer
+- MySQL 8.0+
+- Node.js & npm
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Setup Instructions
 
-## Code of Conduct
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/expenseflow.git
+cd expenseflow
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **Install PHP dependencies**
+```bash
+composer install
+```
 
-## Security Vulnerabilities
+3. **Install NPM dependencies**
+```bash
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Environment setup**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+5. **Configure your database** in `.env`
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=expenseflow
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. **Run migrations and seed default categories**
+```bash
+php artisan migrate --seed
+```
+
+7. **Build frontend assets**
+```bash
+npm run dev
+```
+
+8. **Start the development server**
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000` in your browser!
+
+## 🗄️ Database Schema
+
+### Core Tables
+- **users** - User authentication and preferences
+- **categories** - Expense categories with icons and colors
+- **expenses** - Individual expense transactions
+- **budgets** - Monthly budget limits per category
+- **notifications** - User notifications for actions and alerts
+
+## 🎨 Features Breakdown
+
+### 1️⃣ Dashboard
+- Summary cards (today, week, month, year)
+- Recent expenses list
+- Quick-add floating action button
+- Recent notifications display
+
+### 2️⃣ Expense Management
+- Create, read, update, delete expenses
+- Real-time search and filtering
+- Bulk selection and actions
+- Receipt upload support
+- Multiple payment methods (Cash, Card, Bank Transfer, Other)
+- Soft deletes with confirmation modals
+
+### 3️⃣ Category System
+- Pre-seeded default categories (Food, Transport, Entertainment, etc.)
+- Custom category creation
+- Icon and color selection
+- Category usage statistics
+- Visual category breakdown
+
+### 4️⃣ Budget Management
+- Monthly budget per category
+- Visual progress bars
+- Smart notifications:
+  - ⚠️ Warning at 90% usage
+  - 🚨 Danger at 100%+ usage
+- Budget summary overview
+
+### 5️⃣ Analytics & Reports
+- Spending by category (pie chart)
+- Spending trends (line chart)
+- Top expenses list
+- Custom date range filtering
+
+### 6️⃣ Notification System
+- ✅ Success notifications (create/update)
+- ⚠️ Warning notifications (budget alerts)
+- 🚨 Danger notifications (budget exceeded)
+- ℹ️ Info notifications (deletions)
+- Notification center with unread badge
+- Mark as read/unread functionality
+- Auto-archive after 30 days
+
+### 7️⃣ User Experience
+- 🌙 Dark mode toggle (persisted to database)
+- 📱 Fully responsive mobile design
+- 🔔 Toast notifications for instant feedback
+- ⏳ Loading states on all operations
+- 🎭 Empty states with helpful messages
+- 📤 Export data to CSV
+
+## 🎯 User Flow Examples
+
+### Adding an Expense
+1. Click "Add Expense" button or floating action button
+2. Fill in amount, category, date, description, payment method
+3. Optional: Add notes or upload receipt
+4. Save → Instant success notification
+5. Budget checker runs automatically
+6. If budget threshold reached → Alert notification appears
+
+### Setting a Budget
+1. Navigate to Budgets page
+2. Click "Add Budget"
+3. Select category, amount, month, and year
+4. Save → Budget created notification
+5. Progress tracked automatically as expenses are added
+
+### Dark Mode Toggle
+1. Click theme toggle in navigation
+2. Preference saved to database
+3. Entire app switches instantly
+4. Setting persists across sessions
+
+## 🔒 Security Features
+
+- Laravel's built-in CSRF protection
+- SQL injection prevention via Eloquent ORM
+- Authorization via Laravel Policies
+- XSS protection (Blade auto-escaping)
+- Rate limiting on expense creation
+- User-scoped data (users only see their own data)
+
+## 📊 Performance Considerations
+
+- Livewire's `wire:loading` for better UX
+- Lazy loading for charts and analytics
+- `wire:model.defer` for optimized form inputs
+- Cached category lists
+- Eager loading to prevent N+1 queries
+- Debounced search inputs
+- Auto-archive old notifications
+
+## 🧪 Testing
+
+Run the test suite:
+```bash
+php artisan test
+```
+
+### Test Coverage
+- Authentication flows
+- Expense CRUD operations
+- Category management
+- Budget calculations and alerts
+- Notification creation and delivery
+- Dashboard data aggregation
+
+## 📈 Future Enhancements
+
+- 📸 Receipt OCR using Tesseract
+- 🔄 Recurring expenses/subscriptions
+- 💱 Multiple currency support
+- 🏦 Bank account integration (Plaid API)
+- 📧 Email notifications
+- 📱 PWA/Native mobile app
+- 👥 Shared expenses (family/roommate mode)
+- 📊 Advanced analytics and insights
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+## 👨‍💻 Author
+
+Built and designed by Olutomisin Oluwajuwon using Laravel & Livewire
+
+## 🙏 Acknowledgments
+
+- Laravel team for the amazing framework
+- Livewire team for the reactive magic
+- Tailwind CSS for the beautiful styling
+
+## 📞 Support
+
+If you have any questions or need help, please open an issue on GitHub.
+
+---
+
+**⭐ Star this repo if you find it helpful!**
