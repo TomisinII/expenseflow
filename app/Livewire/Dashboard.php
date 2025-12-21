@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Expense;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -11,6 +12,13 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
+    protected NotificationService $notificationService;
+
+    public function boot(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     /**
      * Calculate the change between current and previous values
      * Returns: 'increase', 'decrease', or 'no-change'
@@ -40,10 +48,19 @@ class Dashboard extends Component
         $user = Auth::user();
         $expense = Expense::where('id', $expenseId)->where('user_id', $user->id)->first();
 
+        // Store data before deleting
+        $expenseData = [
+            'amount' => $expense->amount,
+            'category_name' => $expense->category->name ?? 'Uncategorized',
+        ];
+
         if ($expense) {
             $expense->delete();
             $this->dispatch('message', 'Expense deleted successfully.');
             $this->dispatch('expense-deleted');
+
+            // Create deletion notification
+            $this->notificationService->expenseDeleted(Auth::user(), $expenseData);
         } else {
             $this->dispatch('error', ['message' => 'Expense not found ors unauthorized.']);
         }

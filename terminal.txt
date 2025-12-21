@@ -38,6 +38,7 @@ php artisan make:livewire Analytics
 php artisan make:livewire Landing
 php artisan make:livewire Components/Header
 php artisan make:livewire Notification/Index
+php artisan make:livewire NotificationBell
 
 
 php artisan livewire:publish --config
@@ -48,3 +49,8 @@ php artisan make:volt /profile/update-preferences-form
 
 php artisan make:migration add_preferences_to_users_tablet
 php artisan make:livewire ThemeToggle
+php artisan make:livewire profile/ExportData
+
+
+php artisan make:class Services/NotificationService
+php artisan make:class Services/BudgetCheckerService

@@ -4,6 +4,8 @@ namespace App\Livewire\Expenses;
 
 use App\Models\Category;
 use App\Models\Expense;
+use App\Services\BudgetCheckerService;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -17,6 +19,17 @@ class Edit extends Component
     public $description;
     public $payment_method;
     public $notes;
+
+    protected NotificationService $notificationService;
+    protected BudgetCheckerService $budgetChecker;
+
+    public function boot(
+        NotificationService $notificationService,
+        BudgetCheckerService $budgetChecker
+    ) {
+        $this->notificationService = $notificationService;
+        $this->budgetChecker = $budgetChecker;
+    }
 
     protected $rules = [
         'amount' => 'required|numeric|min:0.01',
@@ -78,6 +91,17 @@ class Edit extends Component
             'notes' => $this->notes,
         ]);
 
+        // Refresh the expense model to get updated data
+        $expense->refresh();
+
+        // Create update notification
+        $this->notificationService->expenseUpdated(Auth::user(), $expense);
+
+        $this->dispatch('notification-created');
+
+        // Re-check budget (amount or category might have changed)
+        $this->budgetChecker->checkBudgetAfterExpense($expense);
+
         // Close modal
         $this->dispatch('close-modal', 'edit-expense');
 
@@ -86,6 +110,9 @@ class Edit extends Component
 
         // Refresh the dashboard
         $this->dispatch('expense-updated');
+
+        // Scroll to top
+        $this->dispatch('scroll-to-top');
     }
 
     public function render()

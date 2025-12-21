@@ -1,6 +1,7 @@
 <div>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between relative">
+            {{-- Title and Description --}}
             <div class="flex flex-col gap-2">
                 <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-100">
                     Budgets
@@ -8,11 +9,19 @@
                 <p class="text-sm font-semibold text-gray-400 dark:text-gray-500">Track your spending against monthly budgets</p>
             </div>
 
-            <x-primary-button x-on:click="$dispatch('open-modal', 'add-budget')">
+            {{-- Add Budget Button (Full Width on Mobile) --}}
+            <x-primary-button x-on:click="$dispatch('open-modal', 'add-budget')" class="w-full justify-center lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
                 Add Budget
             </x-primary-button>
 
+            {{-- Desktop Button (Hidden on Mobile) --}}
+            <div class="hidden lg:block">
+                <x-primary-button x-on:click="$dispatch('open-modal', 'add-budget')">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    Add Budget
+                </x-primary-button>
+            </div>
         </div>
     </x-slot>
 
@@ -28,30 +37,39 @@
 
     <div class="space-y-6">
         {{-- Month/Year Selector and Total --}}
-        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="text-gray-700 dark:text-gray-300 font-medium">Viewing:</span>
-                    <select wire:model.live="selectedMonth"
-                        class="w-full pr-16 mt-1 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm"
-                    >
-                        @foreach($months as $num => $name)
-                            <option value="{{ $num }}">{{ $name }}</option>
-                        @endforeach
-                    </select>
-                    <select wire:model.live="selectedYear"
-                        class="w-full mt-1 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm"
-                    >
-                        @for($y = date('Y'); $y >= 2020; $y--)
-                            <option value="{{ $y }}">{{ $y }}</option>
-                        @endfor
-                    </select>
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 md:p-6">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                {{-- Month/Year Selector --}}
+                <div class="flex flex-col gap-2 w-full md:w-auto">
+                    <span class="text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base">Viewing:</span>
+                    <div class="flex items-center gap-2">
+                        <select wire:model.live="selectedMonth"
+                            class="flex-1 md:w-40 px-3 py-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm text-sm"
+                        >
+                            @foreach($months as $num => $name)
+                                <option value="{{ $num }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+                        <select wire:model.live="selectedYear"
+                            class="w-24 md:w-28 px-3 py-2 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:border-purple-600 dark:focus:border-purple-500 focus:ring-purple-600 dark:focus:ring-purple-500 rounded-md shadow-sm text-sm"
+                        >
+                            @for($y = date('Y'); $y >= 2020; $y--)
+                                <option value="{{ $y }}">{{ $y }}</option>
+                            @endfor
+                        </select>
+                    </div>
                 </div>
 
-                <div class="text-right">
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Budget</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                        ₦{{ number_format($totalSpent, 0) }} <span class="text-gray-400 dark:text-gray-500">/</span>₦{{ number_format($totalAllocated, 0) }}
+                {{-- Total Budget --}}
+                <div class="text-left md:text-right pt-3 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-gray-700">
+                    <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-1">Total Budget</p>
+                    <p class="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-baseline gap-1 md:justify-end">
+                        <span>₦{{ number_format($totalSpent, 0) }}</span>
+                        <span class="text-gray-400 dark:text-gray-500">/</span>
+                        <span>₦{{ number_format($totalAllocated, 0) }}</span>
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <span class="font-medium">₦{{ number_format($totalRemaining, 0) }}</span> remaining
                     </p>
                 </div>
             </div>

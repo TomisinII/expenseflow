@@ -48,19 +48,9 @@
                     Danger Zone
                 </h3>
 
-                <!-- Export Data Section -->
+               <!-- Export Data Section -->
                 <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h4 class="text-base font-semibold text-gray-900 dark:text-gray-100">Export Data</h4>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                                Download all your expense data as CSV
-                            </p>
-                        </div>
-                        <x-secondary-button>
-                            Export
-                        </x-secondary-button>
-                    </div>
+                    <livewire:profile.export-data />
                 </div>
 
                 <!-- Delete Account Section -->

@@ -1,5 +1,3 @@
-{{-- resources/views/components/confirm-modal.blade.php --}}
-
 @props([
     'name',
     'title' => 'Confirm Action',

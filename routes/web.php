@@ -6,6 +6,7 @@ use App\Livewire\Expenses;
 use App\Livewire\Categories;
 use App\Livewire\Budgets;
 use App\Livewire\Landing;
+use App\Livewire\Notifications;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Landing::class)
@@ -22,6 +23,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('budgets.index');
     Route::get('analytics', Analytics::class)
         ->name('analytics');
+    Route::get('notifications', Notifications\Index::class)
+        ->name('notifications.index');
 });
 
 Route::view('profile', 'profile')

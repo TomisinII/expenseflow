@@ -4,10 +4,10 @@ namespace App\Livewire\Expenses;
 
 use App\Models\Category;
 use App\Models\Expense;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends Component
 {
@@ -30,6 +30,13 @@ class Index extends Component
     public $appliedFilterPaymentMethod = '';
     public $appliedFilterMinAmount = '';
     public $appliedFilterMaxAmount = '';
+
+    protected NotificationService $notificationService;
+
+    public function boot(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     /**
      * Get the filtered expenses query (reusable for both display and export)
@@ -165,9 +172,20 @@ class Index extends Component
         $user = Auth::user();
         $expense = Expense::where('id', $id)->where('user_id', $user->id)->first();
 
+        // Store data before deleting
+        $expenseData = [
+            'amount' => $expense->amount,
+            'category_name' => $expense->category->name ?? 'Uncategorized',
+        ];
+
         if ($expense) {
             $expense->delete();
             $this->dispatch('message', 'Expense deleted successfully!');
+
+            // Create deletion notification
+            $this->notificationService->expenseDeleted(Auth::user(), $expenseData);
+
+            $this->dispatch('notification-created');
         } else {
             $this->dispatch('message', 'Expense not found or unauthorized.');
         }

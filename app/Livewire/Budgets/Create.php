@@ -4,6 +4,7 @@ namespace App\Livewire\Budgets;
 
 use App\Models\Budget;
 use App\Models\Category;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -30,6 +31,8 @@ class Create extends Component
         12 => 'December',
     ];
 
+    protected NotificationService $notificationService;
+
     protected $rules = [
         'category_id' => 'required|exists:categories,id',
         'amount' => 'required|numeric|min:1',
@@ -44,6 +47,12 @@ class Create extends Component
         'month.required' => 'Please select a month',
         'year.required' => 'Please enter a year',
     ];
+
+    public function boot(
+        NotificationService $notificationService,
+    ) {
+        $this->notificationService = $notificationService;
+    }
 
     public function mount()
     {
@@ -67,13 +76,17 @@ class Create extends Component
             return;
         }
 
-        Budget::create([
+        $budget = Budget::create([
             'user_id' => Auth::id(),
             'category_id' => $this->category_id,
             'amount' => $this->amount,
             'month' => $this->month,
             'year' => $this->year,
         ]);
+
+        $this->notificationService->budgetCreated(Auth::user(), $budget);
+
+        $this->dispatch('notification-created');
 
         // Reset form
         $this->reset(['category_id', 'amount']);

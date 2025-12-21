@@ -3,6 +3,7 @@
 namespace App\Livewire\Categories;
 
 use App\Models\Category;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -11,6 +12,13 @@ class Create extends Component
     public $name = '';
     public $icon = '🍔';
     public $color = '#EF4444';
+
+    protected NotificationService $notificationService;
+
+    public function boot(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     public $availableIcons = [
         '🍔', '🚗', '🎮', '💡', '🛒',
@@ -35,12 +43,16 @@ class Create extends Component
     {
         $this->validate();
 
-        Category::create([
+        $category = Category::create([
             'user_id' => Auth::id(),
             'name' => $this->name,
             'icon' => $this->icon,
             'color' => $this->color,
         ]);
+
+        $this->notificationService->categoryCreated(Auth::user(), $category);
+
+        $this->dispatch('notification-created');
 
         $this->reset(['name', 'icon', 'color']);
         $this->icon = '🍔';

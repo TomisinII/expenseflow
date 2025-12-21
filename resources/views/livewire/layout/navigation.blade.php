@@ -89,6 +89,16 @@ new class extends Component
                 <span x-show="sidebarOpen" class="font-medium">Analytics</span>
             </a>
 
+            {{-- Notifications --}}
+            <a href="{{ route('notifications.index') }}"
+            wire:navigate
+            class="flex items-center space-x-2 text-sm px-4 py-3 rounded-lg transition {{ request()->routeIs('notifications.index') ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                <svg class="w-5 h-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+                    <path d="M192-216v-72h48v-240q0-87 53.5-153T432-763v-53q0-20 14-34t34-14q20 0 34 14t14 34v53q85 16 138.5 82T720-528v240h48v72H192Zm288-276Zm-.21 396Q450-96 429-117.15T408-168h144q0 30-21.21 51t-51 21ZM312-288h336v-240q0-70-49-119t-119-49q-70 0-119 49t-49 119v240Z"/>
+                </svg>
+                <span x-show="sidebarOpen" class="font-medium">Notifications</span>
+            </a>
+
             {{-- Profile --}}
             <a href="{{ route('profile') }}"
             wire:navigate

@@ -1,6 +1,7 @@
 <div>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between relative">
+            {{-- Title and Description --}}
             <div class="flex flex-col gap-2">
                 <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-100">
                     Categories
@@ -8,11 +9,19 @@
                 <p class="text-sm font-semibold text-gray-400 dark:text-gray-500">Organize your expenses with custom categories</p>
             </div>
 
-            <x-primary-button x-on:click="$dispatch('open-modal', 'add-category')" class="flex items-center gap-2">
+            {{-- Add Category Button (Full Width on Mobile) --}}
+            <x-primary-button x-on:click="$dispatch('open-modal', 'add-category')" class="w-full justify-center lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
                 Add Category
             </x-primary-button>
 
+            {{-- Desktop Button (Hidden on Mobile) --}}
+            <div class="hidden lg:block">
+                <x-primary-button x-on:click="$dispatch('open-modal', 'add-category')" class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    Add Category
+                </x-primary-button>
+            </div>
         </div>
     </x-slot>
 
@@ -27,16 +36,16 @@
     </x-action-message>
 
     <div class="space-y-6">
-        {{-- Category Grid --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {{-- Category Grid - 2 columns on mobile, 4 on desktop --}}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
             @foreach($categories as $category)
-                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow cursor-pointer">
                     <div class="flex flex-col items-center text-center">
-                        <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4 text-3xl" style="background-color: {{ $category->color }}20;">
+                        <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mb-3 lg:mb-4 text-2xl lg:text-3xl" style="background-color: {{ $category->color }}20;">
                             {{ $category->icon }}
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{{ $category->name }}</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ $category->expenses_count }} expenses</p>
+                        <h3 class="text-base lg:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 lg:mb-2">{{ $category->name }}</h3>
+                        <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400">{{ $category->expenses_count }} expenses</p>
                     </div>
                 </div>
             @endforeach
@@ -44,37 +53,37 @@
             {{-- Add Category Card --}}
             <button
                 x-on:click="$dispatch('open-modal', 'add-category')"
-                class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all cursor-pointer">
+                class="bg-white dark:bg-gray-800 rounded-xl p-4 lg:p-6 shadow-sm border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all cursor-pointer">
                 <div class="flex flex-col items-center text-center">
-                    <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-4">
-                        <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-3 lg:mb-4">
+                        <svg class="w-6 h-6 lg:w-8 lg:h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Add Category</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Create a new expense category</p>
+                    <h3 class="text-base lg:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 lg:mb-2">Add Category</h3>
+                    <p class="text-xs lg:text-sm text-gray-500 dark:text-gray-400">Create a new expense category</p>
                 </div>
             </button>
         </div>
 
         {{-- Category Statistics --}}
         @if($categories->count() > 0)
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">Category Statistics</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 lg:p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                <h3 class="text-lg lg:text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 lg:mb-6">Category Statistics</h3>
 
-                <div class="space-y-6">
+                <div class="space-y-4 lg:space-y-6">
                     @foreach($categoryStats as $stat)
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0" style="background-color: {{ $stat['color'] }}20;">
+                        <div class="flex items-center gap-3 lg:gap-4">
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center text-xl lg:text-2xl flex-shrink-0" style="background-color: {{ $stat['color'] }}20;">
                                 {{ $stat['icon'] }}
                             </div>
 
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="font-semibold text-gray-900 dark:text-gray-100">{{ $stat['name'] }}</span>
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $stat['percentage'] }}%</span>
-                                        <span class="text-sm font-bold text-gray-900 dark:text-gray-100">{{ $stat['count'] }}</span>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between mb-2 gap-2">
+                                    <span class="font-semibold text-sm lg:text-base text-gray-900 dark:text-gray-100 truncate">{{ $stat['name'] }}</span>
+                                    <div class="flex items-center gap-2 lg:gap-3 flex-shrink-0">
+                                        <span class="text-xs lg:text-sm font-medium text-gray-500 dark:text-gray-400">{{ $stat['percentage'] }}%</span>
+                                        <span class="text-xs lg:text-sm font-bold text-gray-900 dark:text-gray-100">{{ $stat['count'] }}</span>
                                     </div>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">

@@ -1,6 +1,7 @@
 <div>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:relative">
+            {{-- Title and Description --}}
             <div class="flex flex-col gap-2">
                 <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-200">
                     Dashboard
@@ -8,11 +9,19 @@
                 <p class="text-sm font-semibold text-gray-400 dark:text-gray-500">Welcome back! Here's your financial overview</p>
             </div>
 
-            <x-primary-button x-on:click="$dispatch('open-modal', 'add-expense')" class="flex items-center gap-2">
+            {{-- Add Expense Button (Full Width on Mobile) --}}
+            <x-primary-button x-on:click="$dispatch('open-modal', 'add-expense')" class="w-full justify-center lg:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
                 Add Expense
             </x-primary-button>
 
+            {{-- Desktop Button (Hidden on Mobile) --}}
+            <div class="hidden lg:block">
+                <x-primary-button x-on:click="$dispatch('open-modal', 'add-expense')" class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+                    Add Expense
+                </x-primary-button>
+            </div>
         </div>
     </x-slot>
 
