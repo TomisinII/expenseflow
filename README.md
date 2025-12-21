@@ -5,7 +5,6 @@
 ![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=flat-square&logo=laravel)
 ![Livewire](https://img.shields.io/badge/Livewire-3.x-FB70A9?style=flat-square)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=flat-square&logo=tailwind-css)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ## 📋 Overview
 
