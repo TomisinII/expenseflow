@@ -22,7 +22,7 @@ php artisan make:model Expense
 php artisan make:model Budget
 php artisan make:model Notification
 
-php artisan make:seeder CategorySeeder
+php artisan make:seeder DemoDataSeeder
 
 php artisan db:seed
 
